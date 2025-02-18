@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -38,5 +39,15 @@ func createNote() Note {
 }
 
 func main() {
-	fmt.Println(createNote())
+
+	logs, err := os.OpenFile("logfile.go", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer logs.Close()
+
+	newLog := log.New(logs, "newLog ", log.LstdFlags)
+	newLog.Println(createNote())
+
 }
