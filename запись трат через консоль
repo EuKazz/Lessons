@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+	"time"
+)
+
+type Note struct {
+	Date     time.Time
+	Sum      int
+	Category string
+}
+
+func createNote() Note {
+
+	arguments := os.Args
+	if len(arguments) < 3 {
+		fmt.Println("Not enough arguments")
+		os.Exit(1)
+	}
+
+	n := Note{}
+
+	n.Date = time.Now().UTC()
+
+	x, err := strconv.Atoi(arguments[1])
+	if err != nil {
+		fmt.Println("unavailable sum")
+		os.Exit(1)
+	}
+	n.Sum = x
+
+	n.Category = arguments[2]
+
+	return n
+}
+
+func main() {
+	fmt.Println(createNote())
+}
